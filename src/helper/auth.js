@@ -1,5 +1,4 @@
-import { useContext } from "react"
-import { User, UserContext } from "../context/UserContext"
+import { User } from "../context/UserContext"
 import Cookies from "js-cookie"
 import { generateRandomString } from "../utils";
 

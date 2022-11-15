@@ -1,4 +1,3 @@
-import { PlaylistElement } from './components/PlaylistElement';
 import { useState } from 'react';
 import "./index.css"
 import { UserContext, User, syncUser } from './context/UserContext';
