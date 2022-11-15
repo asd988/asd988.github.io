@@ -1,5 +1,5 @@
-import React, { useContext } from "react"
-import { UserContext } from "../context/UserContext"
+import { useContext } from "react"
+import { User, UserContext } from "../context/UserContext"
 import Cookies from "js-cookie"
 import { generateRandomString } from "../utils";
 
@@ -25,13 +25,12 @@ export const Login = () => {
     }).toString();
 }
 
-export const Logout = () => {
-  const { user } = useContext(UserContext)
-  user.logout();
+export const Logout = (setUser) => {
+  Cookies.remove("profile")
+  setUser(new User(false))
 }
 
 export const Callback = () => {
-  console.log("sus")
 
   const { code, state } = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),

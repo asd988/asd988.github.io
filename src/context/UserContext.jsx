@@ -1,7 +1,5 @@
 import { createContext } from "react"
 import Cookies from "js-cookie"
-import { Callback } from "../helper/auth"
-
 
 export class User {
   loggedIn;
@@ -16,14 +14,7 @@ export class User {
     this.access_token = access_token;
     this.refresh_token = refresh_token;
     this.username = username;
-    // dolgok beolvasása cookiesból
   }
-
-  logout() {
-    Cookies.remove("profile")
-    this.loggedIn = false;
-  }
-
 }
 
 export const syncUser = async () => {
