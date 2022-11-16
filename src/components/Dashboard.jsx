@@ -11,7 +11,7 @@ export const Dashboard = () => {
   const [selFilter, setSelFilter] = useState(undefined);
 
   return (
-    <div className="h-4/5 md:border-[#aaa] md:border-solid md:border rounded-3xl w-full flex-grow md:mt-14 md:mb-14 p-6 flex flex-col items-center">
+    <div className="h-4/5 md:border-[#aaa] md:border-solid md:border rounded-3xl w-full flex-grow md:mt-14 md:mb-14 p-6 flex flex-col items-center select-none">
       <div className="flex">
         <SearchBar setQuery={setQuery}></SearchBar> 
         <Dropdown tag="Sort" setOptionId={setSort} options={[
@@ -26,8 +26,8 @@ export const Dashboard = () => {
         ]}/>
       </div>
       <Playlists searchQuery={searchQuery} sort={sort} selectionFilter={selFilter}></Playlists>
-      <div className="bg-spotify rounded-full w-fit flex px-4 py-2 h-9 items-center">
-        <button>Create Playlist</button>
+      <div className="bg-spotify rounded-full w-44 flex px-4 py-2 h-9 items-center justify-center">
+        <button className="whitespace-nowrap">Create Playlist</button>
         <button className="h-full aspect-square fill-[#eee] border-r-[#eee] border-l pl-2 ml-2 box-content">
           <SettingsIcon></SettingsIcon>
         </button>
