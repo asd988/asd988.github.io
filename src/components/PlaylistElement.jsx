@@ -1,8 +1,8 @@
 import { ReactComponent as NoteIcon } from "../svgs/note.svg"
 
 export const PlaylistElement = ({ title = "Untitled", author = "Unknown", songAmount = 0, imageURL, id, ids }) => {
-  let {selectedIds, updateIds} = ids;
-  let selected = selectedIds.includes(id);
+  const {selectedIds, updateIds} = ids;
+  const selected = selectedIds.includes(id);
 
   const swap = () => {
     let ids = selectedIds

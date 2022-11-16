@@ -5,8 +5,8 @@ import { PlaylistElement } from "./PlaylistElement"
 export const Playlists = ({searchQuery = "", sort = "default", selectionFilter = "none"}) => {
   const { user } = useContext(UserContext)
   const simpleQuery = searchQuery.toLocaleLowerCase().replaceAll(" ", "")
-  let [playlists, setPlaylists] = useState(undefined);
-  let [selectedIds, setSelectedIds] = useState([]);
+  const [playlists, setPlaylists] = useState(undefined);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const updateIds = ids => {
     // copy ids cuz react sucks
@@ -23,7 +23,7 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
   }
 
   const applySettings = () => {
-    playlists = playlists.sort(({ name: a }, { name: b }) => {
+    return playlists.sort(({ name: a }, { name: b }) => {
         if (sort === "a-z") {
             return a.localeCompare(b);
         } else if (sort === "z-a") {
@@ -43,7 +43,6 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
         
         return (simpleName.includes(simpleQuery) || simpleQuery.includes(simpleName)) && allow;
     })
-    return playlists;
   }
 
 
