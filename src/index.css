@@ -50,3 +50,11 @@ body {
     grid-template-rows: repeat(9999, max-content);
   }
 }
+
+@media (min-width: 1400px) {
+  .playlists {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(9999, max-content);
+  }
+}
