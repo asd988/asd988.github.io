@@ -23,7 +23,8 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
   }
 
   const applySettings = () => {
-    return playlists.sort(({ name: a }, { name: b }) => {
+    const playlistsCopy = JSON.parse(JSON.stringify(playlists))
+    return playlistsCopy.sort(({ name: a }, { name: b }) => {
         if (sort === "a-z") {
             return a.localeCompare(b);
         } else if (sort === "z-a") {
@@ -57,7 +58,7 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
       <div className="flex-grow playlists absolute w-full">
         {
           playlists ? (
-            applySettings(playlists, selectedIds, searchQuery, sort, selectionFilter)
+            applySettings()
               .map(({ name, owner, tracks, images, id }, i) => {
               return <PlaylistElement 
                 key={i}
