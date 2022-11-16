@@ -1,16 +1,27 @@
-import { useState } from "react"
 import { ReactComponent as NoteIcon } from "../svgs/note.svg"
 
-export const PlaylistElement = ({ title = "Untitled", author = "Unknown", songAmount = 0, imageURL }) => {
-  let [selected, setSelected] = useState(false);
+export const PlaylistElement = ({ title = "Untitled", author = "Unknown", songAmount = 0, imageURL, id, ids }) => {
+  let {selectedIds, updateIds} = ids;
+  let selected = selectedIds.includes(id);
+
+  const swap = () => {
+    let ids = selectedIds
+    if (selected) {
+      const index = ids.indexOf(id);
+      ids.splice(index, 1);
+    } else {
+      ids.push(id)
+    }
+    updateIds(ids); 
+  }
 
   return (
-    <button className="flex text-start my-2" onClick={() => setSelected(!selected)}>
+    <button className="flex text-start my-2 mx-1" onClick={swap}>
       <div className={"h-10 aspect-square bg-[#333] " + (selected ? "outline outline-2 outline-spotify" : "")}>
         {
           imageURL ?
-          <img src={imageURL} alt="Playlist Cover"></img>
-          : <NoteIcon className="fill-[#888] w-full h-full p-2"/>
+            <img src={imageURL} alt="Playlist Cover"></img>
+            : <NoteIcon className="fill-[#888] w-full h-full p-2" />
         }
       </div>
       <div className="mx-2">
