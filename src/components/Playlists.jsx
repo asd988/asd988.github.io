@@ -50,7 +50,7 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
     getPlaylists(user).then(a => {
       setPlaylists(a);
     })
-  })
+  }, [])
 
   return (
     <div className="relative h-full w-full overflow-auto my-3">
