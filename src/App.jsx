@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import "./index.css"
 import { UserContext, User, syncUser } from './context/UserContext';
-import { Dashboard } from "./components/Dashboard"
+import { Main } from "./components/Main"
 import { useAsyncResource } from 'use-async-resource'
 import { Callback } from './helper/auth';
 
@@ -15,7 +15,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <Dashboard />
+      <Main />
     </UserContext.Provider>
   );
 }

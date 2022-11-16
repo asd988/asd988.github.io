@@ -6,8 +6,8 @@ import {ReactComponent as LogoutIcon} from "../svgs/logout.svg"
 import {ReactComponent as SettingsIcon} from "../svgs/settings.svg"
 import { Playlists } from "./Playlists"
 import { SearchBar } from "./SearchBar"
-
-export const Dashboard = () => {
+i
+export const Main = () => {
   const { user, setUser } = useContext(UserContext)
 
   return (
