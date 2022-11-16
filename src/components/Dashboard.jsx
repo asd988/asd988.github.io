@@ -56,7 +56,7 @@ export const Dashboard = () => {
       id = data.id;
     }
 
-    const selectedPlaylists = playlists.filter(a => selectedIds.includes(a.id))
+    const selectedPlaylists = playlists.filter(a => selectedIds.includes(a.id) && a.id !== id)
     let promises = []
     selectedPlaylists.forEach(a => promises.push(getAllTracks(user, a.id, a.tracks.total)))
     const results = await Promise.all(promises)
