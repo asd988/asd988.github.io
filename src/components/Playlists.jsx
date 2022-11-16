@@ -70,10 +70,10 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
                 title={name} 
                 author={owner.display_name} 
                 songAmount={tracks.total} 
-                imageURL={images[0] ? images[0].url : undefined}
+                imageURL={images.at(-1) ? images.at(-1).url : undefined}
                 id={id}
                 ids={{selectedIds, updateIds}}
-                selectedForEdit={[id == selectedForEdit, changeSelectedForEdit]}
+                selectedForEdit={[id === selectedForEdit, changeSelectedForEdit]}
                 />
             })
           ) : "loading"
