@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { getAllTracks, getPlaylists, putTracks, removeTrackDuplicates, removeTracks } from "../helper/spotifyBridge";
 import { ReactComponent as SettingsIcon } from "../svgs/settings.svg"
-import { shuffleArray } from "../utils/functions";
+import { delay, shuffleArray } from "../utils/functions";
 import { Dropdown } from "./Dropdown";
 
 import { Playlists } from "./Playlists"
@@ -27,8 +27,16 @@ export const Dashboard = () => {
 
   const [isGenerating, setIsGenerating] = useState(false);
 
+  useEffect(() => {
+    getPlaylists(user).then(a => {
+      setPlaylists(a);
+      const candidates = a.filter(a => a.description === "play me " + user.username);
+      if (candidates[0]) setSelectedForEdit(candidates[0].id)
+    })
+  }, [])
+
   const createPlaylist = async () => {
-    const { id: my_id, access_token } = user;
+    const { id: my_id, access_token, username } = user;
     let id = selectedForEdit;
 
     if (id) {
@@ -42,7 +50,7 @@ export const Dashboard = () => {
       const response = await fetch(`https://api.spotify.com/v1/users/${my_id}/playlists`, {
         method: "POST",
         headers: { 'Authorization': 'Bearer ' + access_token },
-        body: JSON.stringify({ name: "test", public: false })
+        body: JSON.stringify({ name: "Play Me", public: false, description: "play me " + username })
       })
       const data = await response.json();
       id = data.id;
@@ -59,6 +67,7 @@ export const Dashboard = () => {
     let trackUris = allTracks.map(({ track }) => track.uri)
     if (order === "random") trackUris = shuffleArray(trackUris);
     await putTracks(user, id, trackUris)
+    await delay(100)
   }
 
   const onClick = () => {
@@ -91,7 +100,7 @@ export const Dashboard = () => {
         selectedIds: [selectedIds, setSelectedIds],
         selectedForEdit: [selectedForEdit, setSelectedForEdit]
       }}></Playlists>
-      <div className="bg-spotify rounded-full w-44 flex px-4 py-2 h-9 items-center justify-center">
+      <div className={"rounded-full w-44 flex px-4 py-2 h-9 items-center justify-center " + (isGenerating ? "bg-pink-500" : "bg-spotify")}>
         <button className="whitespace-nowrap" onClick={onClick} disabled={isGenerating}>
           {isGenerating ? "Generating..." : ((selectedForEdit ? "Replace" : "Create") + " Playlist")}
         </button>

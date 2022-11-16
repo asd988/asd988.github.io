@@ -45,12 +45,6 @@ export const Playlists = ({ searchQuery = "", sort = "default", selectionFilter 
     setSelectedForEdit(id ? id : null)
   }
 
-  useEffect(() => {
-    getPlaylists(user).then(a => {
-      setPlaylists(a);
-    })
-  }, [])
-
   return (
     <div className="relative h-full w-full overflow-auto my-3">
       <div className="flex-grow playlists absolute w-full">
