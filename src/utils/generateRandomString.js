@@ -1,5 +1,5 @@
 
-export const generateRandomString = (length) => {
+export default (length) => {
     let text = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 

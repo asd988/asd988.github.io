@@ -7,6 +7,7 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
   const simpleQuery = searchQuery.toLocaleLowerCase().replaceAll(" ", "")
   const [playlists, setPlaylists] = useState(undefined);
   const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedForEdit, setSelectedForEdit] = useState(null);
 
   const updateIds = ids => {
     // copy ids cuz react sucks
@@ -46,6 +47,10 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
     })
   }
 
+  const changeSelectedForEdit = (id) => {
+    setSelectedForEdit(id ? id : null)
+  }
+
 
   useEffect(() => {
     getPlaylists(user).then(a => {
@@ -68,6 +73,7 @@ export const Playlists = ({searchQuery = "", sort = "default", selectionFilter =
                 imageURL={images[0] ? images[0].url : undefined}
                 id={id}
                 ids={{selectedIds, updateIds}}
+                selectedForEdit={[id == selectedForEdit, changeSelectedForEdit]}
                 />
             })
           ) : "loading"

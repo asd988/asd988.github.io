@@ -1,11 +1,11 @@
 import { User } from "../context/UserContext"
 import Cookies from "js-cookie"
-import { generateRandomString } from "../utils";
+import generateRandomString from "../utils/generateRandomString";
 
 
 const stateKey = 'spotify_auth_state';
 const clientId = 'fd19eb51d7204c3f9096c4751e6c14fd';
-const redirectUri = (window.location.host === "localhost:8888") ? "http://localhost:8888/callback" : "https://asd988.github.io/callback"
+const redirectUri = window.location.protocol + "//" + window.location.hostname + (window.location.port === "" ? "" : ":" + window.location.port) + "/callback"
 
 export const Login = () => {
   const state = generateRandomString(16)
@@ -44,7 +44,7 @@ export const Callback = () => {
     const data = {
       state,
       code,
-      is_localhost: window.location.host === "localhost:8888"
+      redirect_uri: redirectUri
     }
 
     fetch("https://spotify-playlist.asd988.workers.dev/callback", {
