@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { getAllTracks, getPlaylists, putTracks, removeTrackDuplicates, removeTracks } from "../helper/spotifyBridge";
 import { ReactComponent as SettingsIcon } from "../svgs/settings.svg"
+import { ReactComponent as RefreshIcon } from "../svgs/refresh.svg"
 import { delay, shuffleArray } from "../utils/functions";
 import { Dropdown } from "./Dropdown";
 
@@ -26,6 +27,12 @@ export const Dashboard = () => {
   const [shouldRemoveDupes, setShouldRemoveDupes] = useState(true);
 
   const [isGenerating, setIsGenerating] = useState(false);
+
+  const refresh = () => {
+    getPlaylists(user).then(a => {
+      setPlaylists(a);
+    })
+  }
 
   useEffect(() => {
     getPlaylists(user).then(a => {
@@ -74,15 +81,13 @@ export const Dashboard = () => {
     setIsGenerating(true);
     createPlaylist().then(() => {
       setIsGenerating(false)
-      getPlaylists(user).then(a => {
-        setPlaylists(a);
-      })
+      refresh()
     })
   }
 
   return (
     <div className="h-4/5 md:border-[#aaa] md:border-solid md:border rounded-3xl w-full flex-grow md:mt-14 md:mb-14 p-6 flex flex-col items-center select-none">
-      <div className="flex">
+      <div className="flex items-center">
         <SearchBar setQuery={setQuery}></SearchBar>
         <Dropdown tag="Sort" setOptionId={setSort} options={[
           { id: "default", display: "Default" },
@@ -94,6 +99,9 @@ export const Dashboard = () => {
           { id: "selected", display: "Selected" },
           { id: "unselected", display: "Unselected" }
         ]} />
+        <button className="fill-[#aaa] aspect-square h-5 box-border ml-2" onClick={refresh}>
+          <RefreshIcon/>
+        </button>
       </div>
       <Playlists searchQuery={searchQuery} sort={sort} selectionFilter={selFilter} playlistsData={{
         playlists: [playlists, setPlaylists],
