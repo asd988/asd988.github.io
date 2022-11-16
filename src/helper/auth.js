@@ -1,6 +1,6 @@
 import { User } from "../context/UserContext"
 import Cookies from "js-cookie"
-import generateRandomString from "../utils/generateRandomString";
+import { generateRandomString } from "../utils/functions";
 
 
 const stateKey = 'spotify_auth_state';
