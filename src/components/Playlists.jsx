@@ -21,14 +21,17 @@ export const Playlists = () => {
   }, [])
 
   return (
-    <div className="flex-grow playlists">
-      {
-        playlists ? (
-          playlists.map(({ name, owner, tracks, images}) => {
-            return <PlaylistElement title={name} author={owner.display_name} songAmount={tracks.total} imageURL={images[0] ? images[0].url : undefined}/>
-          })
-        ) : "loading"
-      }
+    <div className="relative h-full w-full overflow-auto my-3">
+      <div className="flex-grow playlists absolute w-full">
+        {
+          playlists ? (
+            playlists.map(({ name, owner, tracks, images }) => {
+              return <PlaylistElement title={name} author={owner.display_name} songAmount={tracks.total} imageURL={images[0] ? images[0].url : undefined} />
+            })
+          ) : "loading"
+        }
+      </div>
     </div>
+
   )
 }

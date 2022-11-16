@@ -39,7 +39,14 @@ body {
   
 
 .playlists {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(9999, max-content);
+  display: flex;
+  flex-flow: column;
+}
+ 
+@media (min-width: 640px) {
+  .playlists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(9999, max-content);
+  }
 }
