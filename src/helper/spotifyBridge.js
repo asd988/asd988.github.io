@@ -19,15 +19,17 @@ export async function getAllTracks({ access_token }, playlistId, total) {
 }
 
 export async function removeTracks({ access_token }, playlistId, trackUris) {
+    let promises = []
     for (let i = 0; i < trackUris.length; i += 100) {
-        fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        promises.push(fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
             headers:{'Authorization': 'Bearer ' + access_token},
             method: "DELETE",
             body: JSON.stringify({
                 uris: trackUris.slice(i, i+100)
             })
-        })
+        }))
     }
+    return await Promise.all(promises)
 }
 
 export async function putTracks({ access_token }, playlistId, trackUris) {
