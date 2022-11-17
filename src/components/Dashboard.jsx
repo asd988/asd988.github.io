@@ -10,6 +10,10 @@ import { Playlists } from "./Playlists"
 import { SearchBar } from "./SearchBar"
 import { Toggle } from "./Toggle";
 
+
+let order = "default",
+  shouldRemoveDupes = true;
+
 export const Dashboard = () => {
   const { user } = useContext(UserContext)
 
@@ -24,8 +28,6 @@ export const Dashboard = () => {
   const [selectedForEdit, setSelectedForEdit] = useState(null);
 
   // playlist generate settings
-  let order = "default",
-    shouldRemoveDupes = true;
   const setOrder = (in_) => order = in_,
     setShouldRemoveDupes = (in_) => shouldRemoveDupes = in_;
 
