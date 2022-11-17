@@ -54,7 +54,7 @@ export const Playlists = ({ searchQuery = "", sort = "default", selectionFilter 
                   title={name}
                   author={owner.display_name}
                   songAmount={tracks.total}
-                  imageURL={images.at(-1) ? images.at(-1).url : undefined}
+                  imageURL={images.at(-1)?.url}
                   id={id}
                   ids={{ selectedIds, updateIds }}
                   selectedForEdit={[id === selectedForEdit, changeSelectedForEdit]}
