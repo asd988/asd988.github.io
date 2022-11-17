@@ -8,6 +8,7 @@ import { Dropdown } from "./Dropdown";
 
 import { Playlists } from "./Playlists"
 import { SearchBar } from "./SearchBar"
+import { Toggle } from "./Toggle";
 
 export const Dashboard = () => {
   const { user } = useContext(UserContext)
@@ -23,10 +24,13 @@ export const Dashboard = () => {
   const [selectedForEdit, setSelectedForEdit] = useState(null);
 
   // playlist generate settings
-  const [order, setOrder] = useState("random");
-  const [shouldRemoveDupes, setShouldRemoveDupes] = useState(true);
+  let order = "default",
+    shouldRemoveDupes = true;
+  const setOrder = (in_) => order = in_,
+    setShouldRemoveDupes = (in_) => shouldRemoveDupes = in_;
 
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const refresh = () => {
     getPlaylists(user).then(a => {
@@ -87,32 +91,45 @@ export const Dashboard = () => {
 
   return (
     <div className="h-4/5 md:border-[#aaa] md:border-solid md:border rounded-3xl w-full flex-grow md:mt-14 md:mb-14 p-6 flex flex-col items-center select-none">
-      <div className="flex items-center">
-        <SearchBar setQuery={setQuery}></SearchBar>
-        <Dropdown tag="Sort" setOptionId={setSort} options={[
-          { id: "default", display: "Default" },
-          { id: "a-z", display: "A to Z" },
-          { id: "z-a", display: "Z to A" }
-        ]} />
-        <Dropdown tag="Filter" setOptionId={setSelFilter} options={[
-          { id: "none", display: "None" },
-          { id: "selected", display: "Selected" },
-          { id: "unselected", display: "Unselected" }
-        ]} />
-        <button className="fill-[#aaa] aspect-square h-5 box-border ml-2" onClick={refresh}>
-          <RefreshIcon/>
-        </button>
-      </div>
-      <Playlists searchQuery={searchQuery} sort={sort} selectionFilter={selFilter} playlistsData={{
-        playlists: [playlists, setPlaylists],
-        selectedIds: [selectedIds, setSelectedIds],
-        selectedForEdit: [selectedForEdit, setSelectedForEdit]
-      }}></Playlists>
+      {
+        isSettingsOpen ?
+          <div className="flex-grow">
+            <Dropdown tag="Order" setOptionId={setOrder} options={[
+              { id: "default", display: "Keep Order" },
+              { id: "random", display: "Random" }
+            ]} />
+            <Toggle tag="Remove Duplicates" defaultValue={true} setBool={setShouldRemoveDupes}/>
+          </div>
+          :
+          <>
+            <div className="flex items-center">
+              <SearchBar setQuery={setQuery}></SearchBar>
+              <Dropdown tag="Sort" setOptionId={setSort} options={[
+                { id: "default", display: "Default" },
+                { id: "a-z", display: "A to Z" },
+                { id: "z-a", display: "Z to A" }
+              ]} />
+              <Dropdown tag="Filter" setOptionId={setSelFilter} options={[
+                { id: "none", display: "None" },
+                { id: "selected", display: "Selected" },
+                { id: "unselected", display: "Unselected" }
+              ]} />
+              <button className="fill-[#aaa] aspect-square h-5 box-border ml-2" onClick={refresh}>
+                <RefreshIcon />
+              </button>
+            </div>
+            <Playlists searchQuery={searchQuery} sort={sort} selectionFilter={selFilter} playlistsData={{
+              playlists: [playlists, setPlaylists],
+              selectedIds: [selectedIds, setSelectedIds],
+              selectedForEdit: [selectedForEdit, setSelectedForEdit]
+            }}></Playlists>
+          </>
+      }
       <div className={"rounded-full w-44 flex px-4 py-2 h-9 items-center justify-center " + (isGenerating ? "bg-pink-500" : "bg-spotify")}>
         <button className="whitespace-nowrap" onClick={onClick} disabled={isGenerating}>
           {isGenerating ? "Generating..." : ((selectedForEdit ? "Replace" : "Create") + " Playlist")}
         </button>
-        <button className="h-full aspect-square fill-[#eee] border-r-[#eee] border-l pl-2 ml-2 box-content">
+        <button className="h-full aspect-square fill-[#eee] border-r-[#eee] border-l pl-2 ml-2 box-content" onClick={() => setIsSettingsOpen(!isSettingsOpen)}>
           <SettingsIcon></SettingsIcon>
         </button>
       </div>
