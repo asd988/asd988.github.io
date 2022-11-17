@@ -40,7 +40,7 @@ export const Dashboard = () => {
       const candidates = a.filter(a => a.description === "play me " + user.username);
       if (candidates[0]) setSelectedForEdit(candidates[0].id)
     })
-  }, [])
+  }, [user])
 
   const createPlaylist = async () => {
     const { id: my_id, access_token, username } = user;

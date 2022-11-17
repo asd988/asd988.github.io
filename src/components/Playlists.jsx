@@ -1,6 +1,4 @@
-import { useContext, useEffect } from "react";
-import { UserContext } from "../context/UserContext";
-import { getPlaylists } from "../helper/spotifyBridge";
+
 import { PlaylistElement } from "./PlaylistElement"
 
 export const Playlists = ({ searchQuery = "", sort = "default", selectionFilter = "none",
@@ -9,7 +7,6 @@ export const Playlists = ({ searchQuery = "", sort = "default", selectionFilter 
     selectedIds: [selectedIds, setSelectedIds],
     selectedForEdit: [selectedForEdit, setSelectedForEdit]
   } }) => {
-  const { user } = useContext(UserContext)
   const simpleQuery = searchQuery.toLocaleLowerCase().replaceAll(" ", "")
 
   const updateIds = ids => {

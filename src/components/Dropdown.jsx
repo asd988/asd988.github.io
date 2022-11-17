@@ -20,7 +20,7 @@ export const Dropdown = ({ tag = "", options, defaultIndex = 0, setOptionId = (i
         <div className={"z-10 w-fit absolute mt-10 border-[#aaa] border text-[#aaa] rounded-2xl px-2 py-1 bg-[#0f0f0f] font-light" + (isOpen ? " flex flex-col" : " hidden")}>
           {
             options.map(({ display }, i) =>
-              <button key={i} onClick={() => changeOption(i)} className={(selectedOption == i) ? "font-normal text-[#eee]" : ""}>{display}</button>
+              <button key={i} onClick={() => changeOption(i)} className={(selectedOption === i) ? "font-normal text-[#eee]" : ""}>{display}</button>
             )
           }
         </div>
